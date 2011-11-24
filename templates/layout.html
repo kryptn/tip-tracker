@@ -1,0 +1,33 @@
+<html>
+  <head>
+    <title>{% block title %}tips{% endblock %}</title>
+    <link rel="stylesheet" href="http://twitter.github.com/bootstrap/assets/css/bootstrap-1.2.0.min.css">
+    <style>
+      input{height:26px;}
+      label{padding-right:20px;}
+    </style>
+    {%block head%}{%endblock%}
+  </head>
+  <body>
+    <div class="container" style="padding-left:10px">
+        <div class="page-header">
+          <h1> <a href="{{url_for('index')}}">tips</a> - {% if not session.clocked %}clocked out{% else %}in at {{"%02d"|format(session.in.tm_hour)}}:{{"%02d"|format(session.in.tm_min)}}{% endif %}</h1></div><div style="padding-bottom: 5px">
+          {% if session.get('authed') %}
+Hello {{session.user}} | <a href="{{url_for('clock')}}">clock {% if session.clocked %}out{% else %}in{% endif %}</a> | <a href="{{url_for('logout')}}">logout</a>
+{% else %} Don't use any real password.
+
+<form action="{{url_for('login')}}" method="POST">
+<input type="text" name="user" style="margin-top:5px"/><br />
+<input type="password" name="pass" style="margin-top:5px"/><br />
+<input type="submit" value="submit" style="margin-top:5px"/>
+</form>
+
+{% if error %}}{{error}}{% endif %}
+{% endif %}
+        </div>
+      {% block body %}{% endblock %}
+
+      </div>
+    </div>
+  </body>
+</html>

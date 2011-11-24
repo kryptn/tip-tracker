@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+{% if session.get('authed') and not session.clocked %}
+
+Deliveries: {{deliveries}} - ${{"%.2f"|format(gas)}} <br />
+tips: ${{"%.2f"|format(tips)}} <br />
+total in bag: ${{"%.2f"|format(bag_total)}} <br />
+{% if owe >= 0 %}
+You owe: ${{"%.2f"|format(owe)}}
+{% else %}
+You're owed: ${{"%.2f"|format(owe*-1)}}
+{% endif %} <br />
+taking home: ${{"%.2f"|format(take_home)}}
+
+{% endif %}
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "layout.html" %}
+
+{% block body %}
+
+{% if session.get('authed') and session.get('clocked') %}
+
+<form action="/tips" method="POST">
+<input type="text" name="amount" style="width:150px;margin-right:5px"/><input type="submit" value="submit" />
+</form>
+
+{% for tip in tips %}
+
+<p>${{"%.2f"|format(tip.amount)}} at {{"%02d"|format(tip.time.tm_hour)}}:{{"%02d"|format(tip.time.tm_min)}}</p>
+
+{% endfor %}
+
+{% endif %}
+{% endblock %}
